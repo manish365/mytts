@@ -1,0 +1,9 @@
+ul.breadcrumb
+ li 
+  a.breadcrum-item(href="/")
+   span
+    img.b-img(src="/images/home.png", alt="", srcset="") 
+   span &nbsp; Home  / &nbsp;
+ each item in list
+  li.breadcrum-item.active 
+   span= item 

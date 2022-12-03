@@ -1,0 +1,41 @@
+nav.navigation 
+  section.nav-container.container
+    a.navigation-title(href='/') Mytts
+    ul.navigation-list.float-right
+      if isloggedIn
+        li.navigation-item
+          a.navigation-link(href='/login/logout') Logout
+        li.navigation-item
+          a.navigation-link(onclick="toggleMenu()") Menu
+          .popover#menuBtn
+            ul.popover-list
+              li.popover-item
+                a(href='/news-feed') News feed
+              li.popover-item
+                a(href='/stories') Stories
+              li.popover-item
+                a(href='/spritual') Spritual
+              li.popover-item
+                a(href='/spritual') Speech to text
+              li.popover-item
+                a(href='/spritual') Text to speech
+              li.popover-item
+                a(href='/spritual') Audio to video
+              li.popover-item
+                a(href='/spritual') Image to Video
+              li.popover-item
+                a(href='/spritual') Text to image
+              li.popover-item
+                a(href='/spritual') Background Image
+              li.popover-item
+                a(href='/spritual') Background Audio
+              li.popover-item
+                a(href='/spritual') Background Video
+      else 
+        li.navigation-item(class=(title == 'Login') ? 'active' : null)
+          a.navigation-link(href='/login') Login
+  script(type="text/javascript").
+    function toggleMenu(){
+      var element = document.getElementById("menuBtn");
+      element.classList.toggle("popover-open");
+    }

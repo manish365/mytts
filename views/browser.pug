@@ -1,0 +1,143 @@
+extends layouts/layout
+block content
+  include layouts/header
+  div.container.main-content
+    .row 
+      .column
+        h2.header Welcome to #{title}
+    .row 
+      .column
+        <label for="voicesField">Select Voices</label>
+        <select id="voices"> 
+          <option> Select Voice </option> 
+        </select>
+      .column
+        <label for="volumeField">Volume</label>
+        .flex.align-center  
+          .w-100 
+            <input class="w-90 range-mt" type="range" min="0" max="1" value="1" step="0.1" id="volume" style="background-size:100%" />
+          div 
+            <span id="vol-label" class="range-output">1</span>
+    .row  
+      .column
+        <label for="rateField">Rate</label>
+        .flex.align-center  
+          .w-100 
+            <input class="w-90 range-mt" type="range" min="0" max="10" value="1" step="0.1" id="rate" style="background-size:10%" />
+          div 
+            <span id="rate-label" class="range-output">1</span>
+      .column
+        <label for="pitchField">Pitch</label>
+        .flex.align-center  
+          .w-100 
+            <input class="w-90 range-mt" type="range" min="0" max="2" value="1" step="0.1" id="pitch" style="background-size:50%" />
+          div 
+            <span id="pitch-label" class="range-output">1</span> 
+    .row  
+      .column
+        <label for="pitchField">&nbsp;</label>
+        <textarea rows="9" cols="60" name="description" id="lines">Enter text here...</textarea>
+      .column
+        <label for="pitchField">&nbsp;</label>
+        .flex 
+          <audio controls></audio>
+          <audio controls id="srclinka"> <a id="srclink"> Download audio </a> </audio>
+    .row 
+      .column 
+        .flex.justify-center
+          <button class="button" id="speak"> Speak </button>
+          <button class="button" id="cancel"> Cancel </button>
+
+  script(type="text/javascript").
+    let tts = new SpeechSynthesisUtterance(); 
+    tts.lang = "en"; 
+    let speechvoices = [];
+    window.speechSynthesis.onvoiceschanged = () => { 
+      speechvoices = window.speechSynthesis.getVoices(); 
+      tts.voice = speechvoices[55];
+      let select_voice = document.getElementById("voices"); 
+      speechvoices.forEach((voice, i) => (select_voice.options[i] = new Option(voice.name, i))); 
+      select_voice.selectedIndex = 55;
+    };
+    document.getElementById("volume").addEventListener("input", () => { 
+      const vol = document.getElementById("volume"); 
+      vol.style.backgroundSize = (vol.value*100)+'%';
+      document.getElementById("vol-label").innerHTML = vol.value; 
+    }); 
+    document.getElementById("rate").addEventListener("input", () => { 
+      const rate = document.getElementById("rate"); 
+      tts.rate = rate.value; 
+      rate.style.backgroundSize=  (rate.value*10)+'%';
+      document.getElementById("rate-label").innerHTML = rate.value; 
+    }); 
+    document.getElementById("pitch").addEventListener("input", () => { 
+      const pitch = document.getElementById("pitch"); 
+      pitch.style.backgroundSize=  (pitch.value*50)+'%';
+      document.getElementById("pitch-label").innerHTML = pitch.value; 
+    });
+    document.getElementById("voices").addEventListener("change", () => { 
+      tts.voice = speechvoices[document.getElementById("voices").value]; 
+    });
+    let audioIN = { audio: true };
+    navigator.mediaDevices.getUserMedia(audioIN)
+    .then(function (mediaStreamObj) {
+      let audio = document.querySelector('audio');
+      if ("srcObject" in audio) {
+        audio.srcObject = mediaStreamObj;
+      }
+      else {
+        audio.src = window.URL.createObjectURL(mediaStreamObj);
+      }
+      let speak = document.getElementById('speak');
+      let cancel = document.getElementById('cancel');
+      let mediaRecorder = new MediaRecorder(mediaStreamObj);
+      speak.addEventListener('click', function (ev) {
+        try{
+          mediaRecorder.start();
+        } catch(e){
+          console.log('started already')
+          //mediaRecorder.start();
+        }
+        tts.rate = document.getElementById("rate").value; 
+        tts.volume = document.getElementById("volume").value;
+        tts.pitch = document.getElementById("pitch").value; 
+        tts.text = document.getElementById("lines").value; 
+        window.speechSynthesis.speak(tts);
+      });
+      cancel.addEventListener('click', function (ev) {
+        window.speechSynthesis.cancel();
+        try{
+          mediaRecorder.stop();
+        } catch(e){
+          console.log('stopped')
+        }
+      });
+      tts.onend = (event) => {
+        console.log(`gal khatam after ${event.elapsedTime} seconds.`);
+        mediaRecorder.stop();
+      }
+      mediaRecorder.ondataavailable = function (ev) {
+        dataArray.push(ev.data);
+      }
+      let dataArray = [];
+      mediaRecorder.onstop = function (ev) {
+      let audioData = new Blob(dataArray,
+      { 'type': 'audio/mp3;' });
+          dataArray = [];
+          let audioSrc = window.URL.createObjectURL(audioData);
+          console.log(audioSrc)
+          let playAudio1 = document.getElementById('srclinka');
+          let playAudio1a = document.getElementById('srclink');
+          playAudio1.src = audioSrc;
+          playAudio1a.href = audioSrc;
+          //playAudio1.play()
+          //- playAudio1a.download = 'filename';
+          //- setTimeout(()=>{
+          //-   playAudio1a.click();
+          //- },500)
+        }
+      })
+    .catch(function (err) {
+      console.log(err.name, err.message);
+    });
+    

@@ -1,0 +1,44 @@
+extends layouts/layout
+block content
+  include layouts/header
+  div.container.main-content
+   .login-container
+    .login
+      .column.border-bottom
+        span.header #{title}
+      .column.main-content
+        form(action="/login", method="post" onsubmit="return validateLogin()") 
+          if error_message 
+            .error.column
+              span.error #{error_message}
+          fieldset
+            label(for="userNameField") User Name 
+            input(type="text", placeholder="user@mytts.com", name="userNameField", id="userNameField" required="required" autocomplete="off" value=username)
+            #errorusername.form-error
+          fieldset
+            label(for="passwordField") Passord 
+            input(type="password", placeholder="******", name="passwordField", id="passwordField" required="required" autocomplete="off" value=username)
+            #errorpassword.form-error
+          fieldset
+            .column
+              input(type="submit", value="Login")
+
+  script(type="text/javascript").
+    function validateLogin(){
+      const username = document.getElementById('userNameField').value;
+      const password = document.getElementById('passwordField').value;
+      let result = true;
+      const mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+      if(username == ''){
+        result = false;
+        document.getElementById('errorusername').innerHTML = 'Please enter your username!';
+      } else if(!username.match(mailformat)){
+        document.getElementById('errorusername').innerHTML = 'Please enter your valid username!';
+        result = false;
+      } 
+      if(password == '' || password.length < 6){
+        document.getElementById('errorpassword').innerHTML = 'Please enter your valid password!';
+        result = false;
+      }
+      return result ;
+    }

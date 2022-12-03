@@ -1,0 +1,53 @@
+extends layouts/layout
+block content
+  include layouts/header
+  div.container.main-content
+    .row 
+      .column
+        h2.header Welcome to #{title}
+    .row 
+      .column
+        a.link-card(href='/news-feed') 
+          span News feed
+      .column
+        a.link-card(href='/stories') 
+          span Stories 
+      .column
+        a.link-card(href='/spritual') 
+          span Spritual 
+      .column
+        a.link-card(href='/spritual')
+          span Speech to text      
+    .row.range-mt
+      .column
+        a.link-card(href='/spritual')
+          span Text to speech
+      .column
+        a.link-card(href='/spritual')
+          span Audio to video
+      .column
+        a.link-card(href='/spritual')
+          span Image to Video
+      .column
+        .link-card
+          span Text to image
+    .row.range-mt
+      .column
+        a.link-card(href='/spritual')
+          span Background Image
+      .column
+        .link-card
+          span Background Audio
+      .column
+        .link-card
+          span Background Video
+      .column
+        a.link-card(href='/browserapi') 
+          span Browser tts 
+    .row.range-mt
+      .column
+        a.link-card(href='/spritual')
+          span Manage contacts
+      .column
+        a.link-card(href='/spritual')
+          span Manage Links

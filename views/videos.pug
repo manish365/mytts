@@ -1,0 +1,11 @@
+extends layouts/layout
+block content
+  include layouts/header
+  div.container.main-content
+    .row 
+      .column
+        h2.header Welcome to #{title}, #{data}
+    .row 
+      .column 
+        .flex.justify-center
+         <video src="/video.mp4" width="800px" height="auto" controls autoplay id="videoPlayer"></video>
