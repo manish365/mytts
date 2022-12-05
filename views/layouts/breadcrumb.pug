@@ -4,6 +4,13 @@ ul.breadcrumb
    span
     img.b-img(src="/images/home.png", alt="", srcset="") 
    span &nbsp; Home  / &nbsp;
- each item in list
-  li.breadcrum-item.active 
-   span= item 
+ each item, index in list
+  if index != list.length -1 
+      li.breadcrum-item 
+        a.breadcrum-item(href=`${item.link}`)
+          span= item.name 
+          span &nbsp; / &nbsp; 
+  else 
+      li.breadcrum-item.active 
+        span= item.name 
+ 

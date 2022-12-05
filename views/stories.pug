@@ -1,0 +1,76 @@
+extends layouts/layout
+block content
+  include layouts/header
+  include mixins/timeformat
+  div.container.main-content
+    .row 
+      .column
+        include layouts/breadcrumb
+        .float-right
+          a.button(href='stories/add') Add Story
+    .row 
+      .column 
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th>
+              <th>Date</th>
+              <th>Heading</th>
+              <th>Category</th>
+              <th>Audio</th>
+              <th>Video</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            if data && data['status'] == 'success' && data['data'] && data['data'].length
+              each item, index in data.data
+                <tr>
+                  <td class="text-center">#{index}</td>
+                  <td class="text-center"> 
+                    +timeformat(item['date'])
+                  </td>
+                  <td class="text-center">#{item['heading']}</td>
+                  <td class="text-center">#{item['category']}</td>
+                  <td class="text-center">
+                    if item['audio_url']
+                      <audio controls src=`${item.audio_url}`}> </audio>
+                    else 
+                      #{'.'}
+                  </td>
+                  <td class="text-center">
+                    if item['vidio_url']
+                      <audio controls src=`${item.vidio_url}`}> </audio>
+                    else 
+                      #{'.'}
+                  </td>
+                  <td>
+                    span
+                      a(href=`stories/edit/${item['id']}`)
+                        img.b-img(src="/images/edit.png", alt="", srcset="")
+                    span(onclick='toggleStatus()')
+                      img.b-img(src="/images/view.png", alt="", srcset="")
+                    span 
+                      a(href=`stories/edit/${item['id']}`)
+                        img.b-img(src="/images/delete.png", alt="", srcset="")  
+                  </td>
+                </tr>
+            else 
+              <tr>
+                <td class="text-center" colspan=8>No Records found #{data['data']}</td>
+              </tr>
+          </tbody>
+        </table>
+
+  script(type="text/javascript").
+    async function toggleStatus(){
+      var result;  
+      var r = confirm("Select an Action!");  
+      if (r == true) {  
+          result = "You have selected OK!";  
+      } else {  
+          result = "You have selected Cancelled!";  
+      }
+      alert(result)
+    }
+

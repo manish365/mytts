@@ -9,6 +9,7 @@ var errors = require('./helpers/errorHandler.js');
 var indexRouter = require('./routes/index');
 var browserRoute = require('./routes/broser');
 var loginRouter = require('./routes/login');
+var storiesRoute = require('./routes/stories');
 var usersRouter = require('./routes/users');
 var videosRouter = require('./routes/videos');
 var newsFeedRoute = require('./routes/newsFeed');
@@ -31,9 +32,10 @@ app.use(sessions({
   cookie: { maxAge: oneWeek },
   resave: true
 }));
-app.use('/news-feed', newsFeedRoute);
+app.use('/stories', storiesRoute);
 app.use('/login', loginRouter);
 app.use('/', auth.authenticateToken, indexRouter);
+app.use('/news-feed', auth.authenticateToken, newsFeedRoute);
 app.use('/browserapi', auth.authenticateToken, browserRoute);
 
 app.use('/users', auth.authenticateToken, usersRouter);
