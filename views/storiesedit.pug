@@ -1,0 +1,62 @@
+extends layouts/layout
+block content
+  include layouts/header
+  div.container.main-content
+    .row 
+      .column
+        include layouts/breadcrumb
+    .row 
+      .column.formsec
+        form(method="post" onsubmit="return false") 
+          if error_message 
+            .error.column
+              span.error #{error_message}
+          fieldset
+            label(for="mp3") Audio
+            if data['audio_url']
+              <audio controls src='/#{data.audio_url}'> </audio>
+          fieldset
+            label(for="heading") Heading
+            input(type="text", placeholder="heading", name="heading", id="heading" required="required" autocomplete="off" value=data['heading'])
+            #errorheading.form-error
+          fieldset
+            label(for="slug") Slug 
+            input(type="text", placeholder="slug", name="slug", id="slug" required="required" autocomplete="off" value=data['slug'])
+            #errorslug.form-error
+          fieldset
+            label(for="category") Category 
+            input(type="text", placeholder="category", name="category", id="category" required="required" autocomplete="off" value=data['category'])
+            #errorcategory.form-error
+          fieldset
+            label(for="description") Description
+            textarea.description#description(name="description", cols="60", rows="30")=data['description']
+            #errordescription.form-error
+          fieldset
+            .column.submit-sec
+              input(type="button", class="btn-secondary" value="Cancel")
+              input(type="submit", value="Update", onClick =`validateForm('${data['id']}')`)
+  script(type="text/javascript").
+    function validateForm(id){
+      const heading = document.getElementById('heading').value;
+      const slug = document.getElementById('slug').value;
+      const category = document.getElementById('category').value;
+      const description = document.getElementById('description').value;
+      let data = {heading, slug, category, description};
+      fetch('/stories/update/'+id, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8'
+        },
+        body: JSON.stringify(data)
+      }).then(response => response.json())
+      .then(result => {
+        if(result.status == 'success'){
+          location.reload()
+        } else {
+          alert(JSON.stringify(result, null, 2));
+        }
+      })
+      .catch((err)=>{
+        alert(JSON.stringify(err, null, 2));
+      });
+    }

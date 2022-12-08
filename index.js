@@ -8,6 +8,7 @@ var auth = require('./helpers/jwt.js');
 var errors = require('./helpers/errorHandler.js');
 var indexRouter = require('./routes/index');
 var browserRoute = require('./routes/broser');
+var mp3Route = require('./routes/mp3');
 var loginRouter = require('./routes/login');
 var storiesRoute = require('./routes/stories');
 var usersRouter = require('./routes/users');
@@ -32,6 +33,7 @@ app.use(sessions({
   cookie: { maxAge: oneWeek },
   resave: true
 }));
+app.use('/mp3', mp3Route);
 app.use('/stories', storiesRoute);
 app.use('/login', loginRouter);
 app.use('/', auth.authenticateToken, indexRouter);

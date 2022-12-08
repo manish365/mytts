@@ -275,7 +275,7 @@ input[type='button'].btn-secondary{
   background-color: #000000 ;
   border: 0.1rem solid #000000;
 }
-.description{
+/* .description{
     background-color: transparent;
     border: 0.1rem solid #d1d1d1;
     border-radius: 0.4rem;
@@ -284,10 +284,30 @@ input[type='button'].btn-secondary{
     padding: 0.6rem 1rem 0.7rem;
     width: 100%;
     max-width: 73.5vw;
-}
+} */
 .medium-editor-element{
   min-height: 20rem !important;
 }
 .medium-editor-toolbar-active.medium-editor-stalker-toolbar{
   display: none;
+}
+.capitalize{
+  text-transform: capitalize;
+}
+.desc{
+    max-width: 30rem;
+}
+.eclipse{
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.pointer{
+  cursor: pointer;
+}
+.padding1{
+  padding: 1rem
+}
+textarea.description {
+    min-height: 20rem;
 }

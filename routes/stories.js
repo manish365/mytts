@@ -9,4 +9,8 @@ router.get('/add', function (req, res, next) {
  res.render('storiesadd', { title: 'My tts', isloggedIn: isloggedIn, list: list });
 });
 router.post("/add", storiesController.createStories, function (req, res) { });
+router.get("/edit/:id/:feedtype", storiesController.editStories, function (req, res) { });
+router.post("/update/:id", storiesController.updateStories, function (req, res) { });
+router.post("/status/update", storiesController.updateStatus, function (req, res) { });
+router.post("/delete", storiesController.deleteStory, function (req, res) { });
 module.exports = router;
