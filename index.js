@@ -33,11 +33,11 @@ app.use(sessions({
   cookie: { maxAge: oneWeek },
   resave: true
 }));
-app.use('/mp3', mp3Route);
-app.use('/stories', storiesRoute);
 app.use('/login', loginRouter);
 app.use('/', auth.authenticateToken, indexRouter);
 app.use('/news-feed', auth.authenticateToken, newsFeedRoute);
+app.use('/mp3', auth.authenticateToken, mp3Route);
+app.use('/stories', auth.authenticateToken, storiesRoute);
 app.use('/browserapi', auth.authenticateToken, browserRoute);
 
 app.use('/users', auth.authenticateToken, usersRouter);

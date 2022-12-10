@@ -1,0 +1,44 @@
+mixin tableview(data='', feedid='')
+ .column 
+  <table>
+   <thead>
+     <tr>
+       <th>Sl.No</th>
+       <th>Date</th>
+       <th>Heading</th>
+       <th>Category</th>
+       <th>Action</th>              
+     </tr>
+   </thead>
+   <tbody>
+     if data && data['status'] == 'success' && data['data'] && data['data'].length
+       each item, index in data.data
+         <tr>
+           <td class="text-center">#{index}</td>
+           <td class="text-center">
+             +timeformat(item['date'])
+           </td>
+           <td class="desc">
+            <div class="eclipse"> #{item['heading']} </div>
+           </td>
+           <td class="text-center">#{item['category']}</td>
+           <td>
+             span
+               a.pointer(href=`/stories/edit/${item['id']}/${feedid}`, title="edit")
+                 img.b-img(src="/images/edit.png", alt="edit")
+             span.padding1.pointer(onclick=`toggleStatus('${item['id']}','${item['status']}')`)
+               if item['status'] == 'active'
+                 img.b-img(src="/images/view.png", alt="", srcset="")
+               else 
+                 img.b-img(src="/images/hidden.png", alt="", srcset="")
+             span.padding1.pointer(onclick=`deleteStory('${item['id']}')`)
+               img.b-img(src="/images/delete.png", alt="", srcset="")  
+           </td>
+         </tr>
+     else 
+       <tr>
+         <td class="text-center" colspan=8>No Records found </td>
+       </tr>
+   </tbody>
+  </table>
+   

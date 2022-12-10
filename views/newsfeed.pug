@@ -5,10 +5,14 @@ block content
     .row 
       .column
         include layouts/breadcrumb
-    .row 
-      .column
-        a.link-card(href='/news-feed/timesofindia') 
-          span.capitalize  timesofindia
-      .column
-        a.link-card(href='/news-feed/aljazeera') 
-          span.capitalize aljazeera 
+    each item, index in data
+      .row 
+        .column.mb-2
+          a.link-card(href=`/news-feed/${item['name']}/${index}`) 
+            span.capitalize  #{item['name']} #{item['categoryid']} (#{item['language']})
+      //- .column
+      //-   a.link-card(href='/news-feed/timesofindia') 
+      //-     span.capitalize  timesofindia
+      //- .column
+      //-   a.link-card(href='/news-feed/aljazeera') 
+      //-     span.capitalize aljazeera 

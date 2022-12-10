@@ -6,7 +6,7 @@ block content
       .column
         include layouts/breadcrumb
         .float-right
-          a.button(href='stories') Back
+          a.button(href=`stories/${feedid}`) Back
     .row 
       .column.formsec
         form(method="post" onsubmit="return false") 
@@ -22,42 +22,23 @@ block content
             input(type="text", placeholder="slug", name="slug", id="slug" required="required" autocomplete="off" value=slug)
             #errorslug.form-error
           fieldset
-            label(for="slug") Category 
-            input(type="text", placeholder="category", name="category", id="category" required="required" autocomplete="off" value=category)
+            label(for="category") Category 
+            input(type="text", placeholder="category", name="category", id="category" required="required" autocomplete="off" value=feedid)
             #errorcategory.form-error
           fieldset
             label(for="description") Description
-            .description#description
+            textarea.description#description(name="description", cols="60", rows="30")=description
             #errordescription.form-error
           fieldset
             .column.submit-sec
               input(type="button", class="btn-secondary" value="Cancel")
               input(type="submit", value="Create", onClick ="validateForm()")
   script(type="text/javascript").
-    var editor = new MediumEditor('.description', {
-      placeholder:{
-        text: 'Add you story here'
-      },
-      toolbar: {
-          allowMultiParagraphSelection: true,
-          buttons: [],
-          diffLeft: 5,
-          diffTop: -10,
-          firstButtonClass: 'medium-editor-button-first',
-          lastButtonClass: 'medium-editor-button-last',
-          relativeContainer: null,
-          standardizeSelectionStart: false,
-          static: false,
-          align: 'center',
-          sticky: true,
-          updateOnEmptySelection: false
-      }
-    });
     function validateForm(){
       const heading = document.getElementById('heading').value;
       const slug = document.getElementById('slug').value;
       const category = document.getElementById('category').value;
-      const description = document.getElementById('description').innerHTML;
+      const description = document.getElementById('description').value;
       let data = {heading, slug, category, description};
       fetch('/stories/add', {
         method: 'POST',
@@ -68,7 +49,7 @@ block content
       }).then(response => response.json())
       .then(result => {
         if(result.status == 'success'){
-          location.replace('/stories')
+          location.replace('/stories/'+category)
         } else {
           alert(JSON.stringify(result, null, 2));
         }

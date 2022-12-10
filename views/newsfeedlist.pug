@@ -2,137 +2,16 @@ extends layouts/layout
 block content
   include layouts/header
   include mixins/timeformat
+  include mixins/tableview
   div.container.main-content
     .row 
       .column
         include layouts/breadcrumb
         .float-right
-          button(onClick="fetchRssFeed()") Fetch Latest
+          button(onClick=`fetchRssFeed('${feedid}')`) Fetch Latest
     .row 
-      .column
-        <table>
-          <thead>
-            <tr>
-              <th>Sl.No</th>
-              <th>Date</th>
-              <th>Heading</th>
-              <th>Audio</th>
-              <th>Action</th>              
-            </tr>
-          </thead>
-          <tbody>
-            if data && data['status'] == 'success' && data['data'] && data['data'].length
-              each item, index in data.data
-                <tr>
-                  <td class="text-center">#{index}</td>
-                  <td class="text-center"> 
-                    +timeformat(item['date'])
-                  </td>
-                  <td class="desc">
-                   <div class="eclipse"> #{item['heading']} </div>
-                  </td>
-                  <td class="text-center">
-                    if item['audio_url']
-                      span -
-                    else 
-                      span.pointer(onclick=`generateMp3('${item    ['id']}')`)
-                        img.b-img(src="/images/mp3.png", alt="generate mp3", srcset="")
-                  </td>
-                  <td>
-                    span
-                      a.pointer(href=`/stories/edit/${item['id']}/${feedid}`, title="edit")
-                        img.b-img(src="/images/edit.png", alt="edit")
-                    span.padding1.pointer(onclick=`toggleStatus('${item    ['id']}','${item['status']}')`)
-                      if item['status'] == 'active'
-                        img.b-img(src="/images/view.png", alt="", srcset="")
-                      else 
-                        img.b-img(src="/images/hidden.png", alt="", srcset="")
-                    span.padding1.pointer(onclick=`deleteStory('${item['id']}')`)
-                      img.b-img(src="/images/delete.png", alt="", srcset="")  
-                  </td>
-                </tr>
-            else 
-              <tr>
-                <td class="text-center" colspan=8>No Records found</td>
-              </tr>
-          </tbody>
-        </table>
-  script(type="text/javascript").
-    function fetchRssFeed(){
-      fetch('/news-feed/fetch/timesofindia', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({url:'https://timesofindia.indiatimes.com/rssfeedmostshared.cms'})
-      }).then(response => response.json())
-      .then(result => {
-       console.log(result)
-        //- if(result.status == 'success'){
-        //-   location.replace('/stories')
-        //- } else {
-        //-   alert(JSON.stringify(result, null, 2));
-        //- }
-      })
-      .catch((err)=>{
-        alert(JSON.stringify(err, null, 2));
-      });
-    }
-    function generateMp3(id){
-     fetch('/mp3/generate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id:id})
-      }).then(response => response.json())
-      .then(result => {
-       if(result.status == 'success'){
-          location.reload();
-        } else {
-          alert(JSON.stringify(result, null, 2));
-        }
-      })
-      .catch((err)=>{
-        alert(JSON.stringify(err, null, 2));
-      });
-    }
-    function toggleStatus(id, status){
-      const upstatus = status == 'hide' ? 'active': 'hide';
-      fetch('/stories/status/update', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({status:upstatus,id:id})
-      }).then(response => response.json())
-      .then(result => {
-       if(result.status == 'success'){
-          location.reload();
-        } else {
-          alert(JSON.stringify(result, null, 2));
-        }
-      })
-      .catch((err)=>{
-        alert(JSON.stringify(err, null, 2));
-      });
-    }
-    function deleteStory(id){
-      fetch('/stories/delete', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({id:id})
-      }).then(response => response.json())
-      .then(result => {
-        if(result.status == 'success'){
-          location.reload();
-        } else {
-          alert(JSON.stringify(result, null, 2));
-        }
-      })
-      .catch((err)=>{
-        alert(JSON.stringify(err, null, 2));
-      });
-    }
+      .column 
+        input(type="text", value=url, id="feedurl")
+    .row
+      .column 
+        +tableview(data, feedid)

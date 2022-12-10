@@ -1,0 +1,76 @@
+{
+ "data": [
+  {
+   "name": "timesofindia",
+   "categoryid": "",
+   "language": "en",
+   "rssfeedlink": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "trending",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/trending?limit=10&page=1&trend_type=new&trend_intvl=3&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "trending date",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/trending?limit=10&start_date=2022-12-07&end_date=2022-12-07&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "latest 51",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/latest?content_type_id=51&limit=10&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "latest 5049",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/latest?limit=10&category_id=5049&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "topic_new",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/topic_new/list?page=1&limit=10&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "trending date",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/trending?limit=10&start_date=2022-12-06&end_date=2022-12-06&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "latest 243",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/latest?limit=10&category_id=243&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "latest 247",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/latest?limit=10&category_id=247&locale_id=2"
+  },
+  {
+   "name": "timesofindia",
+   "categoryid": "latest 238",
+   "language": "hi",
+   "rssfeedlink": "https://frontend-api-navik.indiatimes.com/v1/api/content/latest?limit=10&category_id=238&locale_id=2"
+  },
+  {
+   "name": "NDTV",
+   "categoryid": "",
+   "language": "hi",
+   "rssfeedlink": "http: //feeds.feedburner.com/NDTV-LatestNews"
+  },
+  {
+   "name": "amarujala",
+   "categoryid": "",
+   "language": "hi",
+   "rssfeedlink": "https://www.amarujala.com/rss/breaking-news.xml"
+  }
+ ]
+}

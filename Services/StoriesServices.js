@@ -40,9 +40,11 @@ async function updateStatus(id, up) {
  return stories.save();
 }
 async function deleteStory(id) {
- const stories = await Stories.findById(id);
- stories.is_deleated = 1;
- return stories.save();
+ const stories = await Stories.findByIdAndDelete(id);
+ // stories.is_deleated = 1;
+ // console.log(stories);
+ // return stories.save();
+ return stories.toJSON()
 }
 
 module.exports = {

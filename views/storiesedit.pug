@@ -15,6 +15,8 @@ block content
             label(for="mp3") Audio
             if data['audio_url']
               <audio controls src='/#{data.audio_url}'> </audio>
+            button.generate-btn(onclick=`generateMp3('${data['id']}')`)
+              img.b-img(src="/images/mp3.png", alt="generate mp3", srcset="")
           fieldset
             label(for="heading") Heading
             input(type="text", placeholder="heading", name="heading", id="heading" required="required" autocomplete="off" value=data['heading'])
