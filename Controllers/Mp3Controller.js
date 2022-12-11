@@ -10,7 +10,7 @@ const request = {
  audioConfig: {
   audioEncoding: 'MP3',
   pitch: 0,
-  speakingRate: 0.75
+  speakingRate: 1.15
  },
 };
 const client = new textToSpeech.TextToSpeechClient();
@@ -32,7 +32,8 @@ async function generateMp3(req, res) {
    try {
     const [response] = await client.synthesizeSpeech(request);
     const writeFile = util.promisify(fs.writeFile);
-    const audio_url = `audios/${body.id}.mp3`;
+    const slugarr = data.slug.split('/')
+    const audio_url = `audios/${slugarr[slugarr.length - 1]}.mp3`;
     await writeFile(`public/${audio_url}`, response.audioContent, 'binary');
     mp3Services.createUdate({ content_id: data.id, content_name: data.heading, mp3_name: audio_url }).then(data2 => {
      const up = { audio_url: audio_url };

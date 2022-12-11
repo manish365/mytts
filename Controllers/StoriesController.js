@@ -17,7 +17,7 @@ async function viewStories(req, res) {
   const isloggedIn = true;
   const params = req.params;
   const list = generateBreadcrumb(params.storytype);
-  storiesServices.getAll({ category: params.storytype }).then(data => {
+  storiesServices.getAll({ category: params.storytype, status: 'active' }).then(data => {
     res.render('stories', { title: 'My tts', isloggedIn: isloggedIn, list: list, data: data, feedid: params.storytype });
   }).catch(err => {
     res.render('stories', { title: 'My tts', isloggedIn: isloggedIn, list: list, errorMessage: 'Not able to find Please refresh', data: null, feedid: params.storytype });
@@ -28,7 +28,7 @@ async function viewFeedList(req, res) {
   const params = req.params;
   const list = [{ name: 'News Feed', link: '/news-feed' }, { name: params.feedid, link: '' }];
   const feed = feedlist.data;
-  storiesServices.getAll({ category: params.feedid }).then(data => {
+  storiesServices.getAll({ category: params.feedid, status: 'active' }).then(data => {
     res.render('newsfeedlist', { title: 'My tts', isloggedIn: isloggedIn, list: list, data: data, feedid: params.feedid, url: feed[params.url]['rssfeedlink'] });
   }).catch(err => {
     res.render('newsfeedlist', { title: 'My tts', isloggedIn: isloggedIn, list: list, errorMessage: 'Not able to find Please refresh', data: null, feedid: params.feedid });

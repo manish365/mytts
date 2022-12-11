@@ -31,7 +31,12 @@ async function updateStory(id, up) {
 }
 async function updateAudio(id, up) {
  const stories = await Stories.findById(id);
- stories.audio_url = up.audio_url;
+ if (up.audio_url) {
+  stories.audio_url = up.audio_url;
+ }
+ if (up.video_url) {
+  stories.video_url = up.video_url;
+ }
  return stories.save();
 }
 async function updateStatus(id, up) {

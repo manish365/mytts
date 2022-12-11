@@ -22,7 +22,7 @@ const StoriesSchema = new Schema({
   type: String,
   required: false,
  },
- vidio_url: {
+ video_url: {
   type: String,
   required: false,
  },

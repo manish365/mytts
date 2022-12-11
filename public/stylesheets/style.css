@@ -317,8 +317,12 @@ textarea.description {
 .generate-btn{
   top: -1.6rem;
   position: relative;
-  padding-top: 0.7rem;
+  padding-top: 0.1rem;
   left: 6rem;
   background: #ffe0bd;
   border: navajowhite;
+}
+.big-icon{
+  height: 35px !important;
+  width: 36px !important;
 }

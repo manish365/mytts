@@ -14,9 +14,16 @@ block content
           fieldset
             label(for="mp3") Audio
             if data['audio_url']
-              <audio controls src='/#{data.audio_url}'> </audio>
+              <audio id="myAudio" controls src='/#{data.audio_url}'> </audio>
             button.generate-btn(onclick=`generateMp3('${data['id']}')`)
-              img.b-img(src="/images/mp3.png", alt="generate mp3", srcset="")
+              img.b-img.big-icon(src="/images/mp3.png", alt="generate mp3", srcset="", title="mp3")
+          fieldset
+            label(for="video") Video
+            if data['video_url']
+              <video src='/#{data.video_url}' width="200px" height="auto" controls autoplay id="videoPlayer"></video>
+            button.generate-btn(onclick=`generateVideo('${data['id']}')`)
+              img.b-img.big-icon(src="/images/mp4.png", alt="generate mp4", srcset="" title="mp4")
+            button.generate-btn(onclick=`trimVideo('${data['id']}')`) Trim
           fieldset
             label(for="heading") Heading
             input(type="text", placeholder="heading", name="heading", id="heading" required="required" autocomplete="off" value=data['heading'])
@@ -35,7 +42,7 @@ block content
             #errordescription.form-error
           fieldset
             .column.submit-sec
-              input(type="button", class="btn-secondary" value="Cancel")
+              input(type="button", onclick =`toggleStatus('${data['id']}')` class="btn-secondary" value="Hide")
               input(type="submit", value="Update", onClick =`validateForm('${data['id']}')`)
   script(type="text/javascript").
     function validateForm(id){
