@@ -14,6 +14,7 @@ var storiesRoute = require('./routes/stories');
 var usersRouter = require('./routes/users');
 var videosRouter = require('./routes/videos');
 var newsFeedRoute = require('./routes/newsFeed');
+var imagesRouter = require('./routes/images');
 var app = express();
 const oneWeek = 1000 * 60 * 60 * 24 * 7;
 
@@ -33,15 +34,16 @@ app.use(sessions({
   cookie: { maxAge: oneWeek },
   resave: true
 }));
+app.use('/images', imagesRouter);
 app.use('/login', loginRouter);
 app.use('/', auth.authenticateToken, indexRouter);
 app.use('/news-feed', auth.authenticateToken, newsFeedRoute);
 app.use('/mp3', auth.authenticateToken, mp3Route);
 app.use('/stories', auth.authenticateToken, storiesRoute);
 app.use('/browserapi', auth.authenticateToken, browserRoute);
-
 app.use('/users', auth.authenticateToken, usersRouter);
 app.use('/videos', auth.authenticateToken, videosRouter);
+app.use('/images', imagesRouter);
 app.use(errors.errorHandler);
 
 // catch 404 and forward to error handler

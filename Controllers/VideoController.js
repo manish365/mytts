@@ -19,10 +19,10 @@ async function generateVideo(req, res) {
   if (body.videoType == 'shorts') {
     videoOptions.size = '270x480';
     videoOptions.aspect = '9:16';
-    images.push('public/images/mytssmob.png')
+    images.push('public/images/newsmob.png')
   } else {
     videoOptions.aspect = '16:9';
-    images.push('public/images/mytss.png')
+    images.push('public/images/myttsteacher.png')
   }
   videoOptions.loop = parseInt(body.duration);
   console.log(videoOptions.loop)
@@ -32,9 +32,11 @@ async function generateVideo(req, res) {
       const video_url = `videos/${slugarr[slugarr.length - 1]}.mov`;
       videoshow(images, videoOptions)
         .audio(`public/${data.audio_url}`)
+        // .subtitles('subtitles.srt')
         .save(`public/${video_url}`)
         .on('start', function (command) { })
         .on('error', function (err, stdout, stderr) {
+          console.log(err)
           res.json({ data: null, status: 'failed', err: 'Failed to generate video' })
         })
         .on('end', function (output) {

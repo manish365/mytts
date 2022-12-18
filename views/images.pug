@@ -1,0 +1,11 @@
+extends layouts/layout
+block content
+  include layouts/header
+  div.container.main-content
+    .row 
+      .column
+        include layouts/breadcrumb
+      .row 
+        .column.mb-2
+          a.link-card(href=`/news-feed/`) 
+            span.capitalize io

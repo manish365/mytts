@@ -29,6 +29,9 @@ async function generateMp3(req, res) {
   if (data) {
    const text = data.description;
    request.input = { text: text };
+   if (body?.isquotes) {
+    request.speakingRate = 0.9;
+   }
    try {
     const [response] = await client.synthesizeSpeech(request);
     const writeFile = util.promisify(fs.writeFile);
